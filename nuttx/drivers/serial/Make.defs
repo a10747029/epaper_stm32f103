@@ -22,7 +22,7 @@
 
 # Include serial drivers
 
-CSRCS += serial.c serial_io.c
+CSRCS += serial.c serial_io.c waveshare_2_9.c
 
 ifeq ($(CONFIG_SERIAL_GDBSTUB),y)
   CSRCS += serial_gdbstub.c

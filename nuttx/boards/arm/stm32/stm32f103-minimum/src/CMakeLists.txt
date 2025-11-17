@@ -20,7 +20,7 @@
 #
 # ##############################################################################
 
-set(SRCS stm32_boot.c stm32_bringup.c stm32_spi.c)
+set(SRCS stm32_boot.c stm32_bringup.c stm32_spi.c stm32_epaper_ws2_9.c)
 
 if(CONFIG_BOARDCTL)
   list(APPEND SRCS stm32_appinit.c)

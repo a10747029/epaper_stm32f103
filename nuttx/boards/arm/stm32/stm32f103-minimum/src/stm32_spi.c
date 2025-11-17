@@ -96,6 +96,11 @@ void stm32_spidev_initialize(void)
 #ifdef CONFIG_MMCSD_SPI
   stm32_configgpio(GPIO_SDCARD_CS);           /* SD/MMC Card chip select */
 #endif
+    stm32_configgpio(GPIO_EPD_CS);
+  stm32_gpiowrite(GPIO_EPD_CS, true);
+
+  stm32_configgpio(GPIO_EPD_DC);
+  stm32_gpiowrite(GPIO_EPD_DC, true); /* 默认数据模式 */
 }
 
 /****************************************************************************
@@ -187,6 +192,7 @@ void stm32_spi1select(struct spi_dev_s *dev, uint32_t devid,
 #ifdef CONFIG_MTD_W25
   stm32_gpiowrite(FLASH_SPI1_CS, !selected);
 #endif
+  stm32_gpiowrite(GPIO_EPD_CS, !selected);
 }
 
 uint8_t stm32_spi1status(struct spi_dev_s *dev, uint32_t devid)
@@ -276,7 +282,7 @@ int stm32_spi1cmddata(struct spi_dev_s *dev, uint32_t devid,
       return OK;
     }
 #endif
-
+  stm32_gpiowrite(GPIO_EPD_DC, cmd ? false : true);
   return -ENODEV;
 }
 #endif

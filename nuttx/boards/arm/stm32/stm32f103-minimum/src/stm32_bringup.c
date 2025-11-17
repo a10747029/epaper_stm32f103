@@ -152,6 +152,11 @@
 /****************************************************************************
  * Pre-processor Definitions
  ****************************************************************************/
+/* EPD 所用 SPI 端口号：
+ * - 若在 Kconfig 里配置了 BOARD_WAVESHARE_EPAPER_2_9_SPIPORT，则使用该配置
+ * - 否则默认使用 SPI1
+ */
+#  define EPD_SPI_PORT 1
 
 /* Checking needed by W25 Flash */
 
@@ -577,6 +582,10 @@ int stm32_bringup(void)
 #ifdef CONFIG_USBADB
   usbdev_adb_initialize();
 #endif
-
+  ret = stm32_epaper_init(EPD_SPI_PORT);
+  if (ret < 0)
+    {
+      syslog(LOG_ERR, "ERROR: stm32_epaper_init failed: %d\n", ret);
+    }
   return ret;
 }
